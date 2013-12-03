@@ -21,6 +21,9 @@ public:
     vector<Point> locations;
 
 
+    vector<float> getHOG(cv::Mat& img,cv::Size winSize,cv::Size blockStride);
+
+
 };
 
 #endif // HOG_H

@@ -11,6 +11,13 @@
 #include "videoprocessor.h"
 #include "featuretracker.h"
 #include "frameprocessor.h"
+#include "surfd.h"
+#include "Smatch/hog.h"
+
+
+
+using namespace cv;
+using namespace std;
 
 namespace Ui {
 class MainWindow;

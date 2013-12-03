@@ -18,9 +18,10 @@ Descripcion: Halla los descriptores Surf de la imagen ingresada y los devuelve e
 
 ***************************************************************************************************/
 
-vector<double> SurfD::getSurfDescriptors(Mat M_imgSource)
+cv::Mat SurfD::getSurfDescriptors(Mat M_imgSource)
 {
 
     surf.detect(M_imgSource,V_vectKeypoints);
     surfDesc.compute(M_imgSource,V_vectKeypoints,M_vectDescriptors);
+    return M_vectDescriptors;
 }

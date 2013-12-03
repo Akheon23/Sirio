@@ -25,14 +25,17 @@ void canny(cv::Mat& img,cv::Mat& out){
 void MainWindow::on_pushButton_clicked()
 {
 
-   VideoProcessor processor;
-   FeatureTracker tracker;
-   processor.setInput("/home/lex/Videos/Sword Art Online - Without You AMV.mp4");
-   //processor.setFrameProcessor(&tracker);
-   processor.displayInput("current frame");
-   processor.displayOutput("output frame");
-   processor.setDelay(33);
-   //processor.setFrameProcessor(canny);
-   processor.run();
+
+   SurfD feature;
+   Hog H_featHog;
+   cv:Mat a;
+   vector<float> b;
+   cv::Mat img= cv::imread("/home/lex/Pictures/2013-06-18-587586.png", 1);
+   a=feature.getSurfDescriptors(img);
+   b=H_featHog.getHOG(img,Size (64,128), Size (8,8));
+   qDebug()<<H_featHog.descriptorsValues.size();
+
+   cv::imshow("original",img);
+   cv::waitKey(0);
 
 }

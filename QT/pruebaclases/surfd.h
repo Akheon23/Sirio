@@ -29,10 +29,9 @@ public:
     Mat M_vectDescriptors;//aloja los descriptores
 
 
+    //Metodos
 
-    vector<double> getSurfDescriptors(cv::Mat M_imgSource);
-
-
+    cv::Mat getSurfDescriptors(cv::Mat M_imgSource);
 };
 
 #endif // SURFD_H

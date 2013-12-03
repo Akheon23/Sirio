@@ -36,7 +36,8 @@ SOURCES += main.cpp\
     ../Libs/SvideoProcessor/featuretracker.cpp \
     videoprocessor.cpp \
     surfd.cpp \
-    Smatch/hog.cpp
+    Smatch/hog.cpp \
+    ../Libs/SvideoProcessor/integralproy.cpp
 
 HEADERS  += mainwindow.h \
     simage.h \
@@ -45,6 +46,7 @@ HEADERS  += mainwindow.h \
     ../Libs/SvideoProcessor/featuretracker.h \
     videoprocessor.h \
     surfd.h \
-    Smatch/hog.h
+    Smatch/hog.h \
+    ../Libs/SvideoProcessor/integralproy.h
 
 FORMS    += mainwindow.ui
