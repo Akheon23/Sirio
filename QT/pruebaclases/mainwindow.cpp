@@ -27,13 +27,19 @@ void MainWindow::on_pushButton_clicked()
 
 
    SurfD feature;
+   IntegralProy integral;
    Hog H_featHog;
    cv:Mat a;
    vector<float> b;
+
+   vector<double> c;
+    vector<double> d;
    cv::Mat img= cv::imread("/home/lex/Pictures/2013-06-18-587586.png", 1);
-   a=feature.getSurfDescriptors(img);
-   b=H_featHog.getHOG(img,Size (64,128), Size (8,8));
-   qDebug()<<H_featHog.descriptorsValues.size();
+  // a=feature.getSurfDescriptors(img);
+  // c=integral.integralX(img);
+   d=integral.integralY(img);
+  // b=H_featHog.getHOG(img,Size (64,128), Size (8,8));
+  // qDebug()<<H_featHog.descriptorsValues.size();
 
    cv::imshow("original",img);
    cv::waitKey(0);

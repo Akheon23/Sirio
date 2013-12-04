@@ -13,6 +13,7 @@
 #include "frameprocessor.h"
 #include "surfd.h"
 #include "Smatch/hog.h"
+#include "/home/lex/Cv/QT/Libs/SvideoProcessor/integralproy.h"
 
 
 
