@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Thu Sep 26 09:49:27 2013
+** Created: Sat Dec 7 11:53:06 2013
 **      by: Qt User Interface Compiler version 4.8.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -31,6 +31,8 @@ public:
     QWidget *centralWidget;
     QPushButton *pushButton;
     QLabel *label;
+    QLabel *label_2;
+    QPushButton *pushButton_2;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -44,12 +46,20 @@ public:
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         pushButton = new QPushButton(centralWidget);
         pushButton->setObjectName(QString::fromUtf8("pushButton"));
-        pushButton->setGeometry(QRect(260, 290, 95, 31));
+        pushButton->setGeometry(QRect(30, 140, 95, 31));
         label = new QLabel(centralWidget);
         label->setObjectName(QString::fromUtf8("label"));
-        label->setGeometry(QRect(170, 20, 261, 241));
+        label->setGeometry(QRect(30, 10, 181, 101));
         label->setFrameShape(QFrame::WinPanel);
         label->setScaledContents(true);
+        label_2 = new QLabel(centralWidget);
+        label_2->setObjectName(QString::fromUtf8("label_2"));
+        label_2->setGeometry(QRect(290, 20, 51, 71));
+        label_2->setFrameShape(QFrame::WinPanel);
+        label_2->setScaledContents(true);
+        pushButton_2 = new QPushButton(centralWidget);
+        pushButton_2->setObjectName(QString::fromUtf8("pushButton_2"));
+        pushButton_2->setGeometry(QRect(30, 190, 95, 31));
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
@@ -72,6 +82,8 @@ public:
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", 0, QApplication::UnicodeUTF8));
         pushButton->setText(QApplication::translate("MainWindow", "Imagen", 0, QApplication::UnicodeUTF8));
         label->setText(QString());
+        label_2->setText(QString());
+        pushButton_2->setText(QApplication::translate("MainWindow", "Letras", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };

@@ -22,26 +22,44 @@ void canny(cv::Mat& img,cv::Mat& out){
 
 }
 
+
+
+void MainWindow::Mostrar(cv::Mat PlacaMostrar2){
+
+    cv::Mat PlacaMostrar;
+    cv::cvtColor(PlacaMostrar2,PlacaMostrar,CV_GRAY2BGR);
+    QImage img2= QImage((const uchar*)(PlacaMostrar.data),PlacaMostrar.cols,PlacaMostrar.rows,PlacaMostrar.step, QImage::Format_RGB888);
+    ui->label->setPixmap(QPixmap::fromImage(img2));//muestra imagen en label 2
+
+}
+
+// FUNCION DE COMPARACION
+bool compareContourAreas ( std::vector<cv::Point> contour1, std::vector<cv::Point> contour2 ) {
+    double i = fabs( contourArea(contour1) );
+    double j = fabs( contourArea(contour2) );
+    return ( i < j );
+}
+
+
 void MainWindow::on_pushButton_clicked()
 {
 
 
-   SurfD feature;
-   IntegralProy integral;
-   Hog H_featHog;
-   cv:Mat a;
-   vector<float> b;
+   cv::Mat img= cv::imread("/home/lex/Cv/Images/1cut.png", 0);
+   cv::Mat PlacaMostrar;
+   cv::Mat zona1;
 
-   vector<double> c;
-    vector<double> d;
-   cv::Mat img= cv::imread("/home/lex/Pictures/2013-06-18-587586.png", 1);
-  // a=feature.getSurfDescriptors(img);
-  // c=integral.integralX(img);
-   d=integral.integralY(img);
-  // b=H_featHog.getHOG(img,Size (64,128), Size (8,8));
-  // qDebug()<<H_featHog.descriptorsValues.size();
 
-   cv::imshow("original",img);
+   ///////////////////////RECOLECCION MUESTRAS CONTORNOS///////////////////////////
+   handler.GetContourMask(img,zona1,cmuestra, 200);//obtiene los contornos para la muestra
+   std::sort(cmuestra.begin(), cmuestra.end(),compareContourAreas);//ordena los contornos por area de mayor a menor
+
+   cv::drawContours(img,cmuestra,32,Scalar(0,0,0),1,8);
+   cv::cvtColor(img,PlacaMostrar,CV_GRAY2BGR);
+   QImage img2= QImage((const uchar*)(PlacaMostrar.data),PlacaMostrar.cols,PlacaMostrar.rows,PlacaMostrar.step, QImage::Format_RGB888);
+   ui->label->setPixmap(QPixmap::fromImage(img2));//muestra imagen en label 2
+
+
    cv::waitKey(0);
 
 }

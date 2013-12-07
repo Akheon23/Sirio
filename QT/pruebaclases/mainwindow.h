@@ -13,6 +13,7 @@
 #include "frameprocessor.h"
 #include "surfd.h"
 #include "Smatch/hog.h"
+#include "Scountour/scontour.h"
 #include "/home/lex/Cv/QT/Libs/SvideoProcessor/integralproy.h"
 
 
@@ -31,6 +32,10 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
 
+    Scontour handler;
+    vector<vector<Point> > cmuestra;//contornos muestra
+
+    void Mostrar(cv::Mat PlacaMostrar2);
 
     ~MainWindow();
     

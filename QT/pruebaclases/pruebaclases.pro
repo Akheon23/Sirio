@@ -37,7 +37,8 @@ SOURCES += main.cpp\
     videoprocessor.cpp \
     surfd.cpp \
     Smatch/hog.cpp \
-    ../Libs/SvideoProcessor/integralproy.cpp
+    ../Libs/SvideoProcessor/integralproy.cpp \
+    Scountour/scontour.cpp
 
 HEADERS  += mainwindow.h \
     simage.h \
@@ -47,6 +48,7 @@ HEADERS  += mainwindow.h \
     videoprocessor.h \
     surfd.h \
     Smatch/hog.h \
-    ../Libs/SvideoProcessor/integralproy.h
+    ../Libs/SvideoProcessor/integralproy.h \
+    Scountour/scontour.h
 
 FORMS    += mainwindow.ui
