@@ -16,6 +16,11 @@
 #include "Scountour/scontour.h"
 #include "/home/lex/Cv/QT/Libs/SvideoProcessor/integralproy.h"
 
+#include<iostream>
+#include <fstream>
+#include <string>
+#include <cstdlib>
+
 
 
 using namespace cv;
