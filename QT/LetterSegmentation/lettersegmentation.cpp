@@ -17,7 +17,7 @@ LetterSegmentation::~LetterSegmentation()
 
 void LetterSegmentation::on_pushButton_clicked()
 {
-     cv::Mat img= cv::imread("/home/lex/Cv/Images/placas/1615.jpg");
+     cv::Mat img= cv::imread("/home/lex/Cv/Images/placas/0012.jpg");
 
 
      ///////////////////////RECOLECCION MUESTRAS CONTORNOS///////////////////////////
@@ -27,6 +27,7 @@ void LetterSegmentation::on_pushButton_clicked()
      //cv::drawContours(img,cmuestra,32,Scalar(0,0,0),1,8);
 
      extractor.GetLetters(img);
+
      QImage img2= QImage((const uchar*)(img.data),img.cols,img.rows,img.step, QImage::Format_RGB888);
      ui->label->setPixmap(QPixmap::fromImage(img2));//muestra imagen en label 2
 
@@ -41,6 +42,7 @@ void LetterSegmentation::on_pushButton_2_clicked()
 {
 
     if(extractor.placaCorregida.data){
+           imshow("segmentacion",extractor.placaCorregida);
     QImage img2= QImage((const uchar*)(extractor.placaCorregida.data),extractor.placaCorregida.cols,extractor.placaCorregida.rows,extractor.placaCorregida.step, QImage::Format_RGB888);
     ui->label_2->setPixmap(QPixmap::fromImage(img2));//muestra imagen en label 2
     }

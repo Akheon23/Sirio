@@ -152,8 +152,9 @@ void Segmentation::GetLetters(Mat source)
     vector<int>   CtrLetras;
 
     ///////////////////////RECOLECCION MUESTRAS CONTORNOS///////////////////////////
-    equalizeHist(PlacaMostrar,PlacaMostrar);
-    cv::threshold(PlacaMostrar, PlacaMostrar, 0, 255, CV_THRESH_BINARY | CV_THRESH_OTSU);//binarizado variable
+    //equalizeHist(PlacaMostrar,PlacaMostrar);
+    cv::threshold(PlacaMostrar, PlacaMostrar, 200, 255, 0);//binarizado variable
+    imshow("Binarizacion otsu",PlacaMostrar);
     handler.GetContourMask(PlacaMostrar,binarizada,cmuestra, 200);//obtiene los contornos para la muestra
     std::sort(cmuestra.begin(), cmuestra.end(),compareContourAreas);//ordena los contornos por area de mayor a menor
 

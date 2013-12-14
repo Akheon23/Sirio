@@ -22,6 +22,11 @@ public:
 
     Scontour handler;
     vector<vector<Point> > cmuestra;//contornos muestra
+    void save_image(cv::Mat src, int index, char *extencion);
+
+    void set_save_path(char* path);
+
+        const char *save_path;
     
 private slots:
     void on_pushButton_clicked();

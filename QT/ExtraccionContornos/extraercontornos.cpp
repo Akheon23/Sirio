@@ -22,6 +22,29 @@ ExtraerContornos::~ExtraerContornos()
     delete ui;
 }
 
+void ExtraerContornos::save_image(Mat src, int index, char *extencion)
+{
+    QString path=save_path;
+
+    if(index<10 && index>0)
+        path.append("000");
+    else if(index<100 && index>=10)
+        path.append("00");
+    else if(index<1000 && index>=100)
+        path.append("0");
+    path.append(QString("%1").arg(index));
+    path.append(extencion);
+
+    cv::imwrite(path.toStdString().c_str(),src);
+
+
+}
+
+void ExtraerContornos::set_save_path(char *path)
+{
+    save_path=path;
+}
+
 /**************************************************************************************************
 Funciones
 Autor: Alexander Gómez villa - German Diez Valencia - Sebastian Guzman Obando
@@ -75,6 +98,16 @@ vector<int> findCharacters( vector<vector<Point> > cmuestra){
         }
 
     }
+
+    for(int i=0;i<10;i++)
+        {
+
+
+            CtrLetras[i]=cmuestra.size() - 11 + CtrLetras[i];
+            if((CtrLetras[i]) > (cmuestra.size() -1))CtrLetras[i]=0;
+
+        }
+
     return CtrLetras;
 
 }
@@ -109,17 +142,24 @@ Funciones
 Autor: Alexander Gómez villa - German Diez Valencia - Sebastian Guzman Obando
 Descripcion:Al presionar el boton
 ***************************************************************************************************/
+
+
+
 void ExtraerContornos::on_pushButton_clicked()
 {
 
-
+    unsigned long long i=0;
     /////////////////////////LECTURA BASE DE DATOS/////////////////////////////
     //std::string path;
        QString path;
+       int index2=0;
         //cv::Mat immuestra = cv::imread("C:/Users/Usuario/Documents/UdeA/2013-2/inteligencia/placas/placas/0459.jpg",0);
-       for(int index=9;index<1500;index++)
+       set_save_path("/home/lex/Cv/Images/Letras2/");
+       for(int index=1;index<1500;index++)
        {
-           path="/home/lex/Cv/Images/placas/";
+
+
+           path="/home/lex/Cv/Images/Sabado_23/";
            if(index<10 && index>0)
                path.append("000");
            else if(index<100 && index>=10)
@@ -135,9 +175,11 @@ void ExtraerContornos::on_pushButton_clicked()
             cv::Mat source=cv::imread(path.toStdString().c_str());
             /////////////////////////Variables//////////////////////////////
             cv::Mat PlacaMostrar;
+            cv::Mat PlacaMostrar2;
             cv::Mat binarizada;
              cv::Mat letra;
             cv::cvtColor(source,PlacaMostrar,CV_BGR2GRAY);
+            cv::cvtColor(source,PlacaMostrar2,CV_BGR2GRAY);
             vector<int>   CtrLetras(10);
 
             ///////////////////////RECOLECCION MUESTRAS CONTORNOS///////////////////////////
@@ -146,14 +188,30 @@ void ExtraerContornos::on_pushButton_clicked()
             handler.GetContourMask(PlacaMostrar,binarizada,cmuestra, 200);//obtiene los contornos para la muestra
             std::sort(cmuestra.begin(), cmuestra.end(),compareContourAreas);//ordena los contornos por area de mayor a menor
 
+            if(cmuestra.size() <10){
+                index2++;
+                qDebug()<<"iteracion:"<<index2;
+                continue;
+
+            }
+
             //Correlacion entre areas de contornos
             CtrLetras=findCharacters(cmuestra);
-            cv::waitKey();
-
+            //cv::waitKey();
+            unsigned long long limit=i+10;
             //Guarda cada contorno como imagen
-            for(int i=0;i<10;i++)
+            for(;i<limit;i++)
             {
-                //letra=Extract(PlacaMostrar,cmuestra,CtrLetras[i]);
+
+                 if(abs(CtrLetras[i - limit + 10]) > (cmuestra.size() -1))CtrLetras[i - limit + 10]=0;
+                //()<<"tamaño vector"<<cmuestra.size();
+                //qDebug()<<"contorno #:"<<CtrLetras[i - limit + 10];
+
+                letra=Extract(PlacaMostrar2,cmuestra,CtrLetras[i - limit + 10]);
+
+                imshow("letra",letra);
+                save_image(letra,i,".jpg");
+
             }
 
        }
