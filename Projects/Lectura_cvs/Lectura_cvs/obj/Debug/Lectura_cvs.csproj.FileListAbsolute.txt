@@ -1,0 +1,6 @@
+c:\users\lex\documents\visual studio 2012\Projects\Lectura_cvs\Lectura_cvs\bin\Debug\Lectura_cvs.exe.config
+c:\users\lex\documents\visual studio 2012\Projects\Lectura_cvs\Lectura_cvs\bin\Debug\Lectura_cvs.exe
+c:\users\lex\documents\visual studio 2012\Projects\Lectura_cvs\Lectura_cvs\bin\Debug\Lectura_cvs.pdb
+c:\users\lex\documents\visual studio 2012\Projects\Lectura_cvs\Lectura_cvs\obj\Debug\Lectura_cvs.csprojResolveAssemblyReference.cache
+c:\users\lex\documents\visual studio 2012\Projects\Lectura_cvs\Lectura_cvs\obj\Debug\Lectura_cvs.exe
+c:\users\lex\documents\visual studio 2012\Projects\Lectura_cvs\Lectura_cvs\obj\Debug\Lectura_cvs.pdb
