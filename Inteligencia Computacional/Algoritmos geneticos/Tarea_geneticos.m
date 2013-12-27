@@ -16,12 +16,14 @@ Alelos=9;
 PC=0.5;%probabilidad de cruce
 mutacion=0.03;
 X=rand(tamanoPoblacion,Alelos);%Poblacion de 5000 sujetos con 9 cromosomas cada uno
-mejorSujeto=[1,Alelos];
-mejorDesempeno=0;
+%X=X*(10^(-3));
+mejorSujeto=zeros(1,Alelos);
+mejordesempeno=2;
+mejordesempenoGeneracion=zeros(5000,1);
 %se usa rand pra llenarlo de forma aleatoria
 
-F=[tamanoPoblacion,1];%resultado funcion de desempeño  para sujeto i
-Seleccion=[tamanoPoblacion,1];
+F=zeros(tamanoPoblacion,1);%resultado funcion de desempeño  para sujeto i
+Seleccion=zeros(tamanoPoblacion,1);
 Ftotal=0;%acumula los valores de las funciones de desempeño
 
 generacion=0;
@@ -38,16 +40,19 @@ for i=1:size(X,1)
 end  
 
 %separa el sujeto que mejor se comporto en la generacion
-mejorSujetoGeneracion=X(min(F));
-mejordesempenoGeneracion=Cinetica14DMCTe(mejorSujetoGeneracion);
+[C, E] = min (F);
 
-if(mejordesempenoGeneracion < mejordesempeno)
-   mejordesempeno= mejordesempenoGeneracion;
-   mejorSujeto=mejorSujetoGeneracion
+mejorSujetoGeneracion=X(E,:);
+mejordesempenoGeneracion(generacion)=Cinetica14DMCTe(mejorSujetoGeneracion);
+
+if(mejordesempenoGeneracion(generacion) < mejordesempeno)
+   mejordesempeno= mejordesempenoGeneracion(generacion);
+   mejorSujeto=mejorSujetoGeneracion;
     
 end
 
 %halla  porcentaje de reproduccion
+Seleccion=[tamanoPoblacion,1];
 for i=1:size(X,1)
   Seleccion(i)=1/((F(i)*tamanoPoblacion)/Ftotal);
 end 
@@ -56,11 +61,12 @@ end
 %%POBLACION INTERMEDIA
 %seleccion de mejores sujetos para poblacion intermedia
 
-poblacionNueva=[tamanoPoblacion,Alelos];
+poblacionNueva=zeros(tamanoPoblacion,Alelos);
 
 for i=1:size(X,1)
-    poblacionNueva(i)=X(max(Seleccion));
-    X(max(Seleccion))=X(max(Seleccion)) - 1;
+    [C, E] = max (Seleccion);
+    poblacionNueva(i)=X(E);
+   X(E,:)=X(E,:) - 1;
 end 
 
 %%CRUCE
@@ -68,27 +74,34 @@ end
 cruce=PC*tamanoPoblacion;
 
 %seleccion aleatoria de sujetos a cruzar
-progenitor1=[1,Alelos];
-progenitor2=[1,Alelos];
-primogenito=[cruce,Alelos];
+progenitor1=zeros(1,Alelos);
+progenitor2=zeros(1,Alelos);
+primogenito=zeros(cruce,Alelos);
 
 %sujetos que no se cruzan
-sincruce=[tamanoPoblacion - cruce,1];
+sincruce=zeros(cruce,1);
+
+%para no pasar a los sujeros que fueron cruzados
+      
+for i=1:cruce
+    sujeto1=randi(tamanoPoblacion);
+    while(ismember(sujeto1,sincruce))
+        sujeto1=randi(tamanoPoblacion);
+    end    
+    sincruce(i,1)=sujeto1;
+      
+end    
 
 for i=1:cruce
 
-    sujeto1=randi(tamanoPoblacion);
-    sujeto2=randi(tamanoPoblacion);
-    
-     progenitor1=poblacionNueva(sujeto1);
-     progenitor2=poblacionNueva(sujeto2);
+       
+     progenitor1=poblacionNueva(sincruce(i,1),:);
+     progenitor2=poblacionNueva(sincruce(randi(cruce),1),:);
      
-     %para no pasar a los sujeros que fueron cruzados
-    sincruce=[sincruce;sujeto1];
-    sincruce=[sincruce;sujeto2];
         
      %cruce
-     primogenito(i)= [progenitor1(1,1:4),progenitor1(1,5:9)];
+     A=[progenitor1(1,1:4),progenitor2(1,5:9)];
+     primogenito(i,:)=A;
       
     
 end    
@@ -97,8 +110,8 @@ end
 X=primogenito;
 
 for i=1:tamanoPoblacion
-    if(find(sincruce==i) < 0)
-    X=[X;poblacionNueva(i)];
+    if(ismember(i,sincruce)<1)
+    X=[X;poblacionNueva(i,:)];
     end
 end
 
@@ -109,7 +122,18 @@ mutan=tamanoPoblacion*mutacion;
 for i=1:mutan
 
     sujeto=randi(tamanoPoblacion);
-    X(sujeto)=X(sujeto)*(rand());
+    X(sujeto)=X(sujeto)*(randi(tamanoPoblacion)) + 1;
 end
+
+
+generacion
+fprintf('\n')
+mejordesempenoGeneracion(generacion)
+fprintf('\n')
+mejordesempeno
+fprintf('\n')
+
+
+
 
 end
