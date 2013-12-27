@@ -1,0 +1,55 @@
+[System]
+Name='controlCarro3'
+Type='mamdani'
+Version=2.0
+NumInputs=2
+NumOutputs=1
+NumRules=16
+AndMethod='min'
+OrMethod='max'
+ImpMethod='min'
+AggMethod='max'
+DefuzzMethod='centroid'
+
+[Input1]
+Name='error'
+Range=[-33 33]
+NumMFs=4
+MF1='error-alto':'trapmf',[-56.6 -35.4 -19.8 -10.2142857142857]
+MF2='error-':'trapmf',[-19.8 -15.2777777777778 -0.325 0.437]
+MF3='error+':'trapmf',[-0.1 0.5 15 20]
+MF4='error+alto':'trapmf',[10.3888888888889 20 100 100]
+
+[Input2]
+Name='Derror'
+Range=[-33 33]
+NumMFs=4
+MF1='derivada-':'trapmf',[-30.4 -25.4 -1.35 0.261904761904759]
+MF2='derivada+':'trapmf',[-1.13492063492064 0.826 24.8 29.8]
+MF3='derivada-alta':'trapmf',[-92.4 -39.6 -30 -19.6428571428571]
+MF4='derivada+alta':'trapmf',[20.3412698412698 30 39.6 92.4]
+
+[Output1]
+Name='Fuerza'
+Range=[0 1600]
+NumMFs=2
+MF1='fuerzaMuyBaja':'trapmf',[-792 -230 2.12 23.2804232804233]
+MF2='fuerzaMuyAlta':'trapmf',[1589.41798941799 1590 1830 1910]
+
+[Rules]
+1 1, 1 (1) : 1
+1 2, 1 (1) : 1
+1 3, 1 (1) : 1
+1 4, 1 (1) : 1
+2 1, 1 (1) : 1
+2 2, 1 (1) : 1
+2 3, 1 (1) : 1
+2 4, 1 (1) : 1
+3 2, 2 (1) : 1
+3 3, 2 (1) : 1
+3 4, 1 (1) : 1
+4 1, 2 (1) : 1
+4 2, 2 (1) : 1
+4 3, 2 (1) : 1
+4 4, 2 (1) : 1
+3 1, 2 (1) : 1
