@@ -1,0 +1,44 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%convert an integer (fractional or not) in a binary  vector
+% Autor: Alexander Gomez Villa
+% email: alviurlex@gmail.com
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% result b is a row vector of size 111 the firts number is the sign,
+% from 2 to 56 it's the integer part an
+%
+%
+function b= decimal2Binary(x)
+
+    signalBit=1;
+    %split integer an decimal part
+    
+      if(x < 0)%if it's a negative number
+          x=abs(x);
+          signalBit=0;
+      end
+     integ=floor(x);%integer
+     fract=x-integ;%fraction
+
+     %integer convertion
+    
+     integVector=dec2binvec(integ);
+     
+     integVector=[zeros(1,55- size(integVector,2)) integVector];
+     
+     %fractional convertion
+     fractVector=zeros(1,55);
+     i=0;
+     
+     while( i<55)
+        
+         i=i + 1;
+         fract=fract*2;
+         integF=floor(fract);
+         fract=fract-integF;
+         fractVector(1,i)=integF;
+                           
+     end    
+
+    b=[signalBit integVector fractVector ];
+
+end

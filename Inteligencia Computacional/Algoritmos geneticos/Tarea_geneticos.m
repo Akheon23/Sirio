@@ -13,8 +13,9 @@ clc
 %%Poblacion
 tamanoPoblacion=5000;
 Alelos=9;
-PC=0.5;%probabilidad de cruce
+PC=0.2;%probabilidad de cruce
 mutacion=0.03;
+MUTEN=0;
 X=rand(tamanoPoblacion,Alelos);%Poblacion de 5000 sujetos con 9 cromosomas cada uno
 %X=X*(10^(-3));
 mejorSujeto=zeros(1,Alelos);
@@ -34,10 +35,16 @@ while((generacion<5000) ||(mejorDesempeno< 10^(-15)))
     generacion=generacion + 1;
 %evalua la poblacion en la funcion de desempeño
 for i=1:size(X,1)
+   % if(ismember(NaN,X(i,:)>0) || ismember( Inf,X(i,:)>0))X(i,:)=zeros(1,9);end
+%    X(i,:)=abs( X(i,:));
+%    X(i,:)
    F(i) = Cinetica14DMCTe (X(i,:));
    Ftotal=Ftotal + F(i);
       
 end  
+% for i=1:size(X,1)
+%      if(F(i) >2)F(i)=10^(10);end%penalizacion
+% end    
 
 %separa el sujeto que mejor se comporto en la generacion
 [C, E] = min (F);
@@ -51,6 +58,7 @@ if(mejordesempenoGeneracion(generacion) < mejordesempeno)
     
 end
 
+
 %halla  porcentaje de reproduccion
 Seleccion=[tamanoPoblacion,1];
 for i=1:size(X,1)
@@ -62,12 +70,13 @@ end
 %seleccion de mejores sujetos para poblacion intermedia
 
 poblacionNueva=zeros(tamanoPoblacion,Alelos);
-
+valorResta=median(F);
 for i=1:size(X,1)
     [C, E] = max (Seleccion);
-    poblacionNueva(i)=X(E);
+    poblacionNueva(i,:)=X(E,:);
    X(E,:)=X(E,:) - 1;
 end 
+
 
 %%CRUCE
 %numero de sujetos que se cruzaran
@@ -100,7 +109,7 @@ for i=1:cruce
      
         
      %cruce
-     A=[progenitor1(1,1:4),progenitor2(1,5:9)];
+     A=[progenitor1(1,1:3),progenitor2(1,4:6),progenitor1(1,7:9)];
      primogenito(i,:)=A;
       
     
@@ -116,15 +125,23 @@ for i=1:tamanoPoblacion
 end
 
 
+ 
 %%MUTACION
-
+if(generacion>1 && mejordesempenoGeneracion(generacion)== mejordesempenoGeneracion(generacion-1))
+    MUTEN=MUTEN+1;
+end
+if(MUTEN>50)
+    mutacion=0.3;
+    MUTEN=0;
+end
 mutan=tamanoPoblacion*mutacion;
 for i=1:mutan
 
     sujeto=randi(tamanoPoblacion);
-    X(sujeto)=X(sujeto)*(randi(tamanoPoblacion)) + 1;
+    X(sujeto)=X(sujeto)*(rand());
 end
 
+if(mutacion>0.03)mutacion=0.03;end
 
 generacion
 fprintf('\n')
