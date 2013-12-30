@@ -29,7 +29,7 @@ function b= decimal2Binary(x)
      fractVector=zeros(1,52);
      i=0;%counter
      
-     while( i<52)
+     while( i<52 && fract~=0)
         
          i=i + 1;%counter + 1
          fract=fract*2;

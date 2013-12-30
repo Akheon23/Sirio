@@ -14,7 +14,7 @@ clc
 tamanoPoblacion=5000;
 Alelos=9;
 PC=0.2;%probabilidad de cruce
-mutacion=0.03;
+mutacion=0.003;
 MUTEN=0;
 X=rand(tamanoPoblacion,Alelos);%Poblacion de 5000 sujetos con 9 cromosomas cada uno
 %X=X*(10^(-3));
@@ -66,6 +66,9 @@ for i=1:size(X,1)
 end 
 
 
+
+
+
 %%POBLACION INTERMEDIA
 %seleccion de mejores sujetos para poblacion intermedia
 
@@ -77,6 +80,20 @@ for i=1:size(X,1)
    X(E,:)=X(E,:) - 1;
 end 
 
+%%CODIFICACION
+
+poblacionCodificada=zeros(tamanoPoblacion*9,105);
+contAlelos=0;
+
+for k=1:tamanoPoblacion
+   
+    for l=1:Alelos
+    
+        poblacionCodificada(l+ contAlelos,:)=decimal2Binary(poblacionNueva(k,l));
+    end
+    contAlelos=contAlelos+9;
+end    
+
 
 %%CRUCE
 %numero de sujetos que se cruzaran
@@ -85,49 +102,65 @@ cruce=PC*tamanoPoblacion;
 %seleccion aleatoria de sujetos a cruzar
 progenitor1=zeros(1,Alelos);
 progenitor2=zeros(1,Alelos);
-primogenito=zeros(cruce,Alelos);
+primogenito=zeros(cruce*9,105);
 
-%sujetos que no se cruzan
+%sujetos que  se cruzan
 sincruce=zeros(cruce,1);
 
-%para no pasar a los sujeros que fueron cruzados
-      
-for i=1:cruce
+%seleccion de sujetos para cruzar
+   for i=1:cruce
     sujeto1=randi(tamanoPoblacion);
     while(ismember(sujeto1,sincruce))
         sujeto1=randi(tamanoPoblacion);
     end    
     sincruce(i,1)=sujeto1;
       
-end    
+   end    
+
+%cruce
 
 for i=1:cruce
 
+     progenitor1=sincruce(i,1);
+     progenitor2=sincruce(randi(cruce),1);
+    
+    for j=1:Alelos
+        
+         %cruce
+         A=[poblacionCodificada((progenitor1-1)*9 + j,1)   ,poblacionCodificada((progenitor1-1)*9 + j,2:26),poblacionCodificada((progenitor2-1)*9 + j,27:51),poblacionCodificada((progenitor1-1)*9 + j,52:77),poblacionCodificada((progenitor1-1)*9 + j,78:105)];
+         primogenito(i,:)=A;
+        
+    end    
        
-     progenitor1=poblacionNueva(sincruce(i,1),:);
-     progenitor2=poblacionNueva(sincruce(randi(cruce),1),:);
+    
      
         
-     %cruce
-     A=[progenitor1(1,1:3),progenitor2(1,4:6),progenitor1(1,7:9)];
-     primogenito(i,:)=A;
+    
       
     
 end    
 
 %%NUEVA POBLACION
-X=primogenito;
+poblacionCodificada2=zeros(tamanoPoblacion*9,105);
+
+poblacionCodificada2(1:cruce*9,:)=primogenito;
+
+contPos=cruce*9 +1;
 
 for i=1:tamanoPoblacion
+    
+    
     if(ismember(i,sincruce)<1)
-    X=[X;poblacionNueva(i,:)];
+        contPos=contPos+1;     
+        poblacionCodificada2(contPos:contPos+8,:)= poblacionCodificada((i-1)*9 +1:(i-1)*9 + 9,:);
+        
     end
 end
 
 
  
 %%MUTACION
-if(generacion>1 && mejordesempenoGeneracion(generacion)== mejordesempenoGeneracion(generacion-1))
+if(generacion>1 && mejordesempenoGeneracion(generacion)==mejordesempeno)
     MUTEN=MUTEN+1;
 end
 if(MUTEN>50)
@@ -137,11 +170,27 @@ end
 mutan=tamanoPoblacion*mutacion;
 for i=1:mutan
 
-    sujeto=randi(tamanoPoblacion);
-    X(sujeto)=X(sujeto)*(rand());
+    sujeto=randi(tamanoPoblacion*9);
+    cromosoma=randi(105);
+    genMutado=rand();
+    if(genMutado >= 0.5)genMutado=1;end
+    if(genMutado < 0.5)genMutado=0;end
+   poblacionCodificada2(sujeto,cromosoma)=genMutado;
 end
 
 if(mutacion>0.03)mutacion=0.03;end
+
+for i=1:tamanoPoblacion
+   
+    for j=1:Alelos
+        
+        X(i,j)=binary2Decimal(poblacionCodificada2((i-1)*9 + j,:));
+        if( X(i,j) > 10^(4) || X(i,j) < 10^(-15)) X(i,j)=rand(); end
+        
+    end    
+    
+end    
+
 
 generacion
 fprintf('\n')

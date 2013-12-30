@@ -10,11 +10,27 @@
 function d= binary2Decimal(x)
 
     %Integer part
+    begin=0;
+    cont=1;
+    while(begin==0 && cont<54)
+        cont=cont+1;
+        begin=x(1,cont);
+                 
+    end    
     
-    integerVect=x(1,2:53);%extrac integer part from x
+    if(cont< 53)
+    integerVect=x(1,cont:53);%extrac integer part from x
+   
+    
+    else
+        integerVect=x(1,53);%extrac integer part from x
+    end
     combinedStr=int2str(integerVect(1));%string for integer part
-    for i=2:size(integerVect,2)
-        combinedStr = strcat(combinedStr,int2str(integerVect(i)));%transform integer into string
+    
+    if(cont< 54)
+        for i=2:size(integerVect,2)
+            combinedStr = strcat(combinedStr,int2str(integerVect(i)));%transform integer into string
+        end
     end
 
     integer=bin2dec(combinedStr);%convert binary integer to decimal integer
