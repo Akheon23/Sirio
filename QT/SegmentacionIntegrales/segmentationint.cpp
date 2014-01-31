@@ -13,16 +13,58 @@ SegmentationINT::~SegmentationINT()
     delete ui;
 }
 
+/***************************************************************************************************
+Metodos
+Autor: Alexander Gómez villa - Sebastian Guzman Obando - German Diez Valencia
+Descripcion: Discretiza la imagen
+***************************************************************************************************/
+
+
+void colorReduceEfficient(cv::Mat &image, int div)//para imagenes que no estan rellenas del todo
+{
+    int nl=image.rows;
+    int nc=image.cols;
+
+    if(image.isContinuous())
+    {
+        //then no padded pixels
+        nc=nc*nl;
+        nl=1;//it is now a 1D array
+    }
+    //this loop is executed only once in case of a continuous image
+    for(int j=0; j<nl; j++)
+    {
+        uchar* data= image.ptr<uchar>(j);
+        for(int i=0; i<nc; i++)
+        {
+            //process each pixel
+            data[i]=data[i]/div*div +div/2;
+            //end pixel processing
+        }//end for
+    }//end for
+
+}
+
+
+/***************************************************************************************************
+Metodos
+Autor: Alexander Gómez villa - Sebastian Guzman Obando - German Diez Valencia
+Descripcion: al orpimir el boton
+
+***************************************************************************************************/
+
+
 void SegmentationINT::on_pushButton_clicked()
 {
 
 
     //carga de recursos
-    cv::Mat resultafo= cv::imread("/home/lex/Cv/Images/placas/0085.jpg", 0);
+    cv::Mat resultafo= cv::imread("/home/lex/Cv/Images/placas/0025.jpg", 0);
 
     cv::Mat img;
     resultafo.copyTo(img);
-
+    colorReduceEfficient(img,64);
+    imshow("discretizada",img);
     equalizeHist(img,img);
     threshold(img,img,200,255,CV_THRESH_BINARY | CV_THRESH_OTSU);
     threshold(img,img,220,255,1);
