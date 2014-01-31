@@ -1,0 +1,55 @@
+[System]
+Name='controlCarroSugeno'
+Type='sugeno'
+Version=2.0
+NumInputs=2
+NumOutputs=1
+NumRules=16
+AndMethod='min'
+OrMethod='max'
+ImpMethod='prod'
+AggMethod='sum'
+DefuzzMethod='wtaver'
+
+[Input1]
+Name='error'
+Range=[-33 33]
+NumMFs=4
+MF1='error-alto':'trapmf',[-56.76 -35.64 -20 -10]
+MF2='error-':'trapmf',[-20 -15 -0.5 0.1]
+MF3='error+alto':'trapmf',[10 20 50.94 55.46]
+MF4='error+':'trapmf',[-0.1 0.5 15 20]
+
+[Input2]
+Name='Derror'
+Range=[-33 33]
+NumMFs=4
+MF1='derivada-alta':'trapmf',[-56.76 -35.64 -30 -20]
+MF2='derivada+':'trapmf',[-0.3 1 25 30]
+MF3='derivada+alta':'trapmf',[20 30 35.64 56.76]
+MF4='derivada-':'trapmf',[-30 -25 -1 0.3]
+
+[Output1]
+Name='Fuerza'
+Range=[0 1]
+NumMFs=2
+MF1='fuerzaMuyBaja':'constant',[0]
+MF2='fuerzaMuyAlta':'constant',[1600]
+
+[Rules]
+1 4, 1 (1) : 1
+1 2, 1 (1) : 1
+1 1, 1 (1) : 1
+1 3, 1 (1) : 1
+2 4, 1 (1) : 1
+2 3, 1 (1) : 1
+2 2, 1 (1) : 1
+2 1, 1 (1) : 1
+4 2, 2 (1) : 1
+4 1, 2 (1) : 1
+4 3, 1 (1) : 1
+4 4, 2 (1) : 1
+3 1, 2 (1) : 1
+3 2, 2 (1) : 1
+3 3, 2 (1) : 1
+3 4, 2 (1) : 1

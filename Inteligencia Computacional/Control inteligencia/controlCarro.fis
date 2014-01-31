@@ -1,0 +1,60 @@
+[System]
+Name='controlCarro'
+Type='mamdani'
+Version=2.0
+NumInputs=2
+NumOutputs=1
+NumRules=16
+AndMethod='min'
+OrMethod='max'
+ImpMethod='min'
+AggMethod='max'
+DefuzzMethod='centroid'
+
+[Input1]
+Name='error'
+Range=[-33 33]
+NumMFs=5
+MF1='error-alto':'trapmf',[-56.8 -35.6 -20 -15]
+MF2='error-':'trapmf',[-20 -15 -0.5 0]
+MF3='error+':'trapmf',[0 0.5 15 20]
+MF4='error+alto':'trapmf',[15 20 100 100]
+MF5='tolerancia':'trimf',[-0.5 0 0.5]
+
+[Input2]
+Name='Derror'
+Range=[-33 33]
+NumMFs=5
+MF1='derivada-':'trapmf',[-30 -25 -1 0]
+MF2='derivada+':'trapmf',[0 1 25 30]
+MF3='tolerancia':'trimf',[-1 0 1]
+MF4='derivada-alta':'trapmf',[-92.4 -39.6 -30 -25]
+MF5='derivada+alta':'trapmf',[25 30 39.6 92.4]
+
+[Output1]
+Name='Fuerza'
+Range=[0 1600]
+NumMFs=5
+MF1='fuerzaMuyBaja':'trapmf',[-805 -243 30 60]
+MF2='fuerzaAlta':'trapmf',[896 1200 1500 1560]
+MF3='fuerzaMuyAlta':'trapmf',[1500 1560 1831 1910]
+MF4='fuerzaBaja':'trapmf',[30 60 400 700]
+MF5='fuerzaMedia':'trapmf',[400 700 900 1200]
+
+[Rules]
+4 5, 3 (1) : 1
+4 2, 3 (1) : 1
+4 1, 3 (1) : 1
+4 4, 3 (1) : 1
+3 5, 5 (1) : 1
+3 2, 5 (1) : 1
+3 1, 2 (1) : 1
+3 5, 2 (1) : 1
+2 5, 4 (1) : 1
+2 2, 4 (1) : 1
+2 1, 4 (1) : 1
+2 4, 5 (1) : 1
+1 5, 1 (1) : 1
+1 2, 1 (1) : 1
+1 1, 1 (1) : 1
+1 4, 1 (1) : 1

@@ -1,0 +1,6 @@
+c:\users\lex\documents\visual studio 2012\Projects\ErrorANN\ErrorANN\bin\Debug\ErrorANN.exe.config
+c:\users\lex\documents\visual studio 2012\Projects\ErrorANN\ErrorANN\bin\Debug\ErrorANN.exe
+c:\users\lex\documents\visual studio 2012\Projects\ErrorANN\ErrorANN\bin\Debug\ErrorANN.pdb
+c:\users\lex\documents\visual studio 2012\Projects\ErrorANN\ErrorANN\obj\Debug\ErrorANN.csprojResolveAssemblyReference.cache
+c:\users\lex\documents\visual studio 2012\Projects\ErrorANN\ErrorANN\obj\Debug\ErrorANN.exe
+c:\users\lex\documents\visual studio 2012\Projects\ErrorANN\ErrorANN\obj\Debug\ErrorANN.pdb
